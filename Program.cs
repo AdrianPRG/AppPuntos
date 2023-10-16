@@ -1,19 +1,20 @@
 ﻿using System;
 GraficoCompuesto GraficoCOM = new GraficoCompuesto();
         
-Punto punto = new Punto(800, 2211);
-punto.Dibujar();
+Punto punto = new Punto(600, 50);
+Console.WriteLine(punto.Dibujar());
+punto.Mover(3, 45);
 Circulo circulo = new Circulo(12, 120, 200);
-circulo.Dibujar();
+Console.WriteLine(circulo.Dibujar());
 circulo.Mover(1, 2);
 Rectangulo rectangulo = new Rectangulo(92, 49, 20, 100);
-rectangulo.Dibujar();
+Console.WriteLine(rectangulo.Dibujar());
 rectangulo.Mover(300, 010);
 
 GraficoCOM.añadir(punto);
 GraficoCOM.añadir(circulo);
 GraficoCOM.añadir(rectangulo);
-        
+
 GraficoCOM.mostrar();
 public class EditorGrafico{};
 
