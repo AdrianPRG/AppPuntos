@@ -1,228 +1,303 @@
 ﻿using System;
-/**
-GraficoCompuesto GraficoCOM = new GraficoCompuesto();
-Punto punto = new Punto(600, 50);
-Console.WriteLine(punto.Dibujar());
-punto.Mover(3, 45);
-Circulo circulo = new Circulo(12, 120, 200);
-Console.WriteLine(circulo.Dibujar());
-circulo.Mover(1, 2);
-Rectangulo rectangulo = new Rectangulo(92, 49, 20, 100);
-Console.WriteLine(rectangulo.Dibujar());
-rectangulo.Mover(300, 010);
-
-GraficoCOM.añadir(punto);
-GraficoCOM.añadir(circulo);
-GraficoCOM.añadir(rectangulo);
-
-GraficoCOM.mostrar();
-*/
-
-static void imprimeono(Punto punto)
+//FUNCION PARA CREAR EL PUNTO
+static Punto CrearPunto()
 {
-    Console.WriteLine("DESEA SALIR (1) O DIBUJAR LA FIGURA (2)");
-    int quedesea = Convert.ToInt32(Console.ReadLine());
-    switch (quedesea)
-    {
-        case 1:
-            punto.Dibujar();
-            break;
-        case 2:
-            break;
-    }
+    Console.WriteLine("CREACION DE PUNTO");
+    Console.WriteLine("INTRODUZCA X");
+    int xdepunto = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA Y");
+    int ydepunto = Convert.ToInt32(Console.ReadLine());
+    Punto puntonuevo = new Punto(xdepunto, ydepunto);
+    return puntonuevo;
 }
 
-static void main()
+//FUNCION PARA CREAR CIRCULO
+static Punto CrearCirculo()
 {
-    bool continuar = true;
-    while (continuar!=false)
-    {
-        Console.WriteLine("QUE DESEA CREAR \n 1 -> PUNTO \n 2 -> CIRCULO \n 3 -> RECTANGULO");
-        int opcion = Convert.ToInt32(Console.ReadLine());
-        
-        switch (opcion)
-        {
-            case 1:
-                
-                Console.WriteLine("INTRODUZCA X");
-                int xdepunto = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA Y");
-                int ydepunto = Convert.ToInt32(Console.ReadLine());
-                Punto puntonuevo = new Punto(xdepunto, ydepunto);
-                puntonuevo.Mover(xdepunto, ydepunto);
-                imprimeono(puntonuevo);
-                break;
-            case 2:
-                Console.WriteLine("INTRODUZCA X");
-                int xdecirculo = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA Y");
-                int ydecirculo = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA RADIO");
-                int radiocirculo = Convert.ToInt32(Console.ReadLine());
-                Circulo circulonuevo = new Circulo(xdecirculo, ydecirculo,radiocirculo);
-                circulonuevo.Mover(xdecirculo, ydecirculo);
-                imprimeono(circulonuevo);
-                break;
-            case 3:
-                Console.WriteLine("INTRODUZCA X");
-                int xderectangulo = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA Y");
-                int yderectangulo = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA ANCHO");
-                int ancho = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("INTRODUZCA ALTO");
-                int alto = Convert.ToInt32(Console.ReadLine());
-                Rectangulo rectangulonuevo = new Rectangulo(xderectangulo, yderectangulo,ancho,alto);
-                rectangulonuevo.Mover(xderectangulo, yderectangulo);
-                imprimeono(rectangulonuevo);
-                break;
-            case 4:
-                continuar = false;
-                Console.WriteLine("PROGRAMA FINALIZADO");
-                break;
-        } 
-    }
+    Console.WriteLine("CREACION DE CIRCULO");
+    Console.WriteLine("INTRODUZCA X");
+    int xdecirculo = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA Y");
+    int ydecirculo = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA RADIO");
+    int radiocirculo = Convert.ToInt32(Console.ReadLine());
+    Circulo circulonuevo = new Circulo(xdecirculo, ydecirculo, radiocirculo);
+    return circulonuevo;
 }
 
-main();
+//FUNCION PARA CREAR RECTANGULO
+static Punto CrearRectangulo()
+{
+    Console.WriteLine("CREACION DE RECTANGULO");
+    Console.WriteLine("INTRODUZCA X");
+    int xderectangulo = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA Y");
+    int yderectangulo = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA ANCHO");
+    int ancho = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("INTRODUZCA ALTO");
+    int alto = Convert.ToInt32(Console.ReadLine());
+    Rectangulo rectangulonuevo = new Rectangulo(xderectangulo, yderectangulo, alto, ancho);
+    return rectangulonuevo;
+}
+
+
+//PROGRAMA PRINCIPAL QUE LLAMA A LAS FUNCIONES PARA SOLICITAR LAS CREACIONES
+static void Main()
+{
+    GraficoCompuesto graficoCompuesto = new GraficoCompuesto();
+    graficoCompuesto.Añadir(CrearPunto());
+    graficoCompuesto.Añadir(CrearCirculo());
+    graficoCompuesto.Añadir(CrearRectangulo());
+    Console.WriteLine("QUE DESEA (1) MOVER Y DIBUJAR // (2) SALIR");
+    int accion = Convert.ToInt32(Console.ReadLine());
+    if (accion==1)
+    {
+        graficoCompuesto.Mover(new Random().Next(0,800), new Random().Next(0,600));
+        Console.WriteLine(graficoCompuesto.Dibujar());   
+    }
+    Console.WriteLine("FIN DEL PROGRAMA");
+}
+
+Main();
 
 
 //CLASES
 
 
+public class EditorGrafico { };
 
-public class EditorGrafico{};
-
-//Interfaz Igrafico
+////////////////////////Interfaz Igrafico/////////////////////////
 interface IGrafico
 {
-     public bool Mover(int x, int y);
+    public bool Mover(int x, int y);
 
-     public string Dibujar();
+    public string Dibujar();
 }
+
+
+/////////////////   CLASE PUNTO /////////////////////
+
 
 public class Punto : IGrafico
 {
-    
-    //Setters y getters
-    public int x { get; set; }
+    //Setters y getters de la X
 
-    //Setters y getters
-    public int y { get; set; }
+    private int _x;
+
+    public int X
+    {
+        get { return _x; }
+        set
+        {
+            if (value > 800 || value < 0)
+            {
+                throw new Exception("X NO PUEDE SER MAYOR A 800 NI MENOR A 0!");
+            }
+
+            _x = value;
+        }
+    }
+
+    //Setters y getters de la Y
+
+    private int _y;
+
+    public int Y
+    {
+        get { return _y; }
+        set
+        {
+            if (value > 600 || value < 0)
+            {
+                throw new Exception("LA Y NO PUEDE SER MAYOR A 600 NI MENOR A 0!");
+            }
+
+            _y = value;
+        }
+    }
 
     //constructor
     public Punto(int valorx, int valory)
     {
-        x = valorx;
-        y = valory;
+        X = valorx;
+        Y = valory;
     }
 
     //funcion mover con codigo
     //Una clase que implemente una interfaz no tiene que hacer override de las funciones de la interfaz pues ya esta implementada
     //virtual es para que los de abajo lo puedan heredar
     //override es de clase a clase
-    public virtual bool Mover(int x,int y)
+
+    public virtual bool Mover(int x, int y)
     {
-        if (x<0 || x>800)
+        if (x < 0 || x > 800 || y < 0 || y > 600)
         {
-            throw new Exception("X FUERA DE RANGO");
+            return false;
         }
-        else if (y<0 || y>600)
-        {
-            throw new Exception("Y FUERA DE RANGO");;
-        }
-        else return true;
+
+        return true;
     }
 
     //funcion Dibujar devuelve string
     public virtual string Dibujar()
     {
-        return $"Punto --> X -> {x} Y -> {y}";
+        return $"PUNTO --> X -> {X} Y -> {Y}";
     }
-
-   
 }
+
+
+/////////////////   CLASE CIRCULO /////////////////////
+
 
 public class Circulo : Punto
 {
-    //setters y getters de rario
-    public int radio { get; set; }
-    
-    //constructor de circulo
-    public Circulo(int valorx, int valory, int valorradio):base(valorx,valory)
+    //setters y getters de radio
+
+    private double _radio;
+
+    public double Radio
     {
-        x = valorx;
-        y = valory;
-        radio = valorradio;
+        get { return _radio; }
+        set {
+            if (X - value  < 0 || X + value > 800 || Y - value < 0 || Y + value > 600)
+            {
+                throw new Exception("EL CIRCULO NO PUEDE SUPERAR LOS VALORES ESTABLECIDOS!");
+            }
+
+            _radio = value;
+        }
+    }
+
+    //constructor de circulo
+    public Circulo(int valorx, int valory, int valorradio) : base(valorx, valory)
+    {
+        X = valorx;
+        Y = valory;
+        Radio = valorradio;
     }
 
     //fun override de Mover, con distinto codigo
     public override bool Mover(int x, int y)
     {
-        if (x - radio < 0 || x + radio > 800 || y - radio < 0 || y + radio > 600)
+        if (x - _radio < 0 || x + _radio > 800 || y - _radio < 0 || y + _radio > 600)
         {
-            throw new Exception("SE PASA DE LO PERMITIDO");
+            return false;
         }
-        else return true;
+
+        return true;
     }
-    
-    //fun override de Dibujar con codigo añadido
+
+    //fun override de Dibujar con codigo disntinto adaptado a circulo
     public override string Dibujar()
     {
-        return base.Dibujar() + $" radio -> {radio}";
+        return $"CIRCULO --> X -> {X} Y -> {Y} radio -> {Radio} ";
     }
 }
+
+
+/////////////////   CLASE RECTANGULO  /////////////////////
+
 
 public class Rectangulo : Punto
 {
     //setters y getters
-   public int altura { get; set; }
-   //setters y getters
-   public int anchura { get; set; }
+
+    private double _altura;
+
+    public double Altura
+    {
+        get { return _altura; }
+        set
+        {
+            if (Y - value / 2 < 0 || Y + value / 2 > 600)
+            {
+                throw new Exception("LA ALTURA NO PUEDE SOBREPASAR LOS LIMITES!: 600 MAX 0 MIN");
+            }
+
+            _altura = value;
+        }
+    }
+
+    private double _anchura;
+
+    //setters y getters
+    public double Anchura
+    {
+        get { return _anchura; }
+        set
+        {
+            if ( X - value / 2 < 0 || X + value / 2 > 800)
+            {
+                throw new Exception("LA ANCHURA NO PUEDE SOBREPASAR LOS LIMITES!!: 800 MAX 0 MIN");
+            }
+
+            _anchura = value;
+        }
+    }
+
     //constructor rectangulo
     public Rectangulo(int valorx, int valory, int valoraltura, int valoranchura) : base(valorx, valory)
     {
-        x=valorx;
-        y=valory;
-        altura = valoraltura;
-        anchura = valoranchura;
+        X = valorx;
+        Y = valory;
+        Altura = valoraltura;
+        Anchura = valoranchura;
     }
-    
+
     //fun override de mover con distinto codigo
     public override bool Mover(int x, int y)
     {
-        if (x - anchura/2 < 0 || x + anchura/2 > 800 || y - altura/2 < 0 || y + altura/2 > 600)
+        if (x - Anchura / 2 < 0 || x + Anchura / 2 > 800 || y - Altura / 2 < 0 || y + Altura / 2 > 600)
         {
             return false;
         }
-        else return true;
+        return true;
     }
 
-    //fun override de Dibujar con mas codigo añadido
+    //fun override de Dibujar con codigo adaptado
     public override string Dibujar()
     {
-        return base.Dibujar() + $" Altura -> {altura} Anchura -> {anchura}";
+        return $"RECTANGULO --> X -> {X} Y -> {Y} Altura -> {Altura} Anchura -> {Anchura}";
     }
 }
 
-class GraficoCompuesto
+/////////////////   CLASE GRAFICOCOMPUESTO /////////////////////
+
+
+class GraficoCompuesto : IGrafico
 {
     //Lista privada
-    private List<IGrafico> lista = new List<IGrafico>();
+    private List<IGrafico> _lista = new List<IGrafico>();
 
     //Funcion para añadir graficos
-    public void añadir(IGrafico grafico)
+    public void Añadir(IGrafico grafico)
     {
-        lista.Add(grafico);
+        _lista.Add(grafico);
     }
 
-    //mostrar todos los graficos
-    public void mostrar()
+    public bool Mover(int x, int y)
     {
-        foreach (var i in lista)
+        bool nohayerror = true;
+        
+        foreach (var igrafico in _lista)
         {
-            i.Dibujar();
+            if (igrafico.Mover(x,y)==false)
+            {
+                nohayerror = false;
+            }
         }
+        return nohayerror;
     }
 
+    public string Dibujar()
+    {
+        string dibujardeigraficos = "";
+        foreach (var igrafico in _lista)
+        {
+            dibujardeigraficos += igrafico.Dibujar() + "\n";
+        }
+
+        return dibujardeigraficos;
+    }
 }
